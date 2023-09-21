@@ -1,6 +1,7 @@
-public class Main {
+public class Principal {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+
+        Scanner scanner= new Scanner(System.in);
         GestorPessoas gestor = new GestorPessoas();
 
         while (true) {
