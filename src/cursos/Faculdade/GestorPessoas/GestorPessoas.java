@@ -1,3 +1,10 @@
+package GestorPessoas;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 class GestorPessoas {
     private List<Pessoa> pessoas = new ArrayList<>();
 

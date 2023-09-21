@@ -1,4 +1,4 @@
-import java.util.*;
+package GestorPessoas;
 
 public class Pessoa {
     private String nome;
