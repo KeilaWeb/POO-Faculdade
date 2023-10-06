@@ -1,81 +1,134 @@
-package GestorPessoas;
-import java.util.List;
+package Atividade.App;
+import java.util.ArrayList;
 import java.util.Scanner;
-public class Principal {
-    public static void main(String[] args) {
-        Scanner scanner= new Scanner(System.in);
-        GestorPessoas gestor = new GestorPessoas();
 
-        while (true) {
-            System.out.println("Escolha uma opção:");
-            System.out.println("1 - Adicionar Pessoa");
-            System.out.println("2 - Remover Pessoa");
-            System.out.println("3 - Buscar Pessoa");
-            System.out.println("4 - Limpar Vetor");
-            System.out.println("5 - Ordenar Vetor");
-            System.out.println("6 - Sair");
-            System.out.print("Opção: ");
-            int opcao = scanner.nextInt();
-            scanner.nextLine(); // Limpa o buffer do teclado
+public class View {
+    Scanner tec = new Scanner(System.in);
+    private DeviceService deviceService = new DeviceService();
 
-            switch (opcao) {
-                case 1:
-                    System.out.print("Informe o nome da pessoa: ");
-                    String nome = scanner.nextLine();
-                    System.out.print("Informe a idade da pessoa: ");
-                    int idade = scanner.nextInt();
-                    scanner.nextLine(); // Limpa o buffer do teclado
+    public void menu() {
+        System.out.println("--- MENU ---");
+        System.out.println("1) Gestão de device");
+        System.out.println("2) Gestão de Aplicativos");
+        System.out.print("Informe a opção desejada: ");
+        String opcao = tec.next();
 
-                    Pessoa pessoa = new Pessoa(nome, idade);
-                    gestor.addPessoa(pessoa);
-                    break;
-                case 2:
-                    System.out.print("Informe o índice da pessoa a ser removida: ");
-                    int indice = scanner.nextInt();
-                    scanner.nextLine(); // Limpa o buffer do teclado
-                    gestor.removePessoa(indice);
-                    break;
-                case 3:
-                    System.out.print("Informe o nome da pessoa a ser buscada: ");
-                    String nomeBusca = scanner.nextLine();
-                    Pessoa pessoaEncontrada = gestor.buscarPessoa(nomeBusca);
-                    if (pessoaEncontrada != null) {
-                        System.out.println("Pessoa encontrada: " + pessoaEncontrada);
-                    } else {
-                        System.out.println("Pessoa não encontrada.");
-                    }
-                    break;
-                case 4:
-                    gestor.limparPessoas();
-                    System.out.println("Vetor limpo.");
-                    break;
-                case 5:
-                    gestor.ordenarPessoas();
-                    System.out.println("Vetor ordenado por nome.");
-                    break;
-                case 6:
-                    scanner.close();
-                    System.exit(0);
-                default:
-                    System.out.println("Opção inválida.");
-                    break;
-            }
+        if (opcao.equalsIgnoreCase("1")) {
+            gestaoDeDevice();
+        }
+        if (opcao.equalsIgnoreCase("2")) {
+            gestaoDeAplicativos(); // Corrigido o nome do método
+        }
+        System.out.println("Opção Inválida.");
+    }
 
-            System.out.println("Pessoas no vetor:");
-            List<Pessoa> pessoas = gestor.getPessoas();
-            for (int i = 0; i < pessoas.size(); i++) {
-                System.out.println(i + ": " + pessoas.get(i));
-            }
+    public void gestaoDeDevice() {
+        System.out.println(" --- MENU DE DEVICES ---");
+        System.out.println("1) Cadastrar um novo Device");
+        System.out.println("2) Listar Devices cadastrados");
+        System.out.println("3) Pesquisar um Device");
+        System.out.println("4) Editar um Device");
+        System.out.println("5) Remover um Device");
+
+        System.out.println("Informe a opção desejada");
+        switch (tec.nextInt()){
+            case 1:
+                System.out.println("--- Cadastrar um novo Device ---");
+                Device novoDevice = novoDevice();
+                deviceService.adicionarDevice(novoDevice);
+                break;
+            case 2:
+                System.out.println("--- Devices cadastrados ---");
+                listarDevices(deviceService.listarDevice());
+                break;
+            case 3:
+                System.out.println("--- Buscar um device cadastrado ---");
+                Long deviceId = buscarDevice();
+                Device device = deviceService.buscarDevice(deviceId);
+                if (device != null) {
+                    //tem que ir algo aqui
+                } else {
+                    System.out.println("Device não encontrado.");
+                }
+                break;
+            case 4:
+                System.out.println("--- Editar os dados de um device ---");
+                editarDevice();
+                break;
+            case 5:
+                System.out.println("--- Remover um device ---");
+                Long idParaRemover = removerDevice();
+                deviceService.excluirDevice(idParaRemover);
+                break;
+            default:
+                System.out.println("Opção Inválida!");
+                break;
         }
     }
-}
-    /*Neste código, você pode adicionar, remover, buscar,
-    limpar e ordenar pessoas no vetor usando um menu interativo.
-        A classe GestorPessoas é responsável por gerenciar todas essas
-        operações no vetor pessoas. Certifique-se de seguir as opções do
-            menu para realizar as operações desejadas.*/
 
+    public void editarDevice() {
+        System.out.println("1) Informar os novos dados");
+        System.out.println("2) Editar método");
+        System.out.print("Informe a opção desejada: ");
 
+        int opcao = tec.nextInt();
+        if (opcao == 1) {
+            // Implemente a lógica para editar os dados do dispositivo
+        } else if (opcao == 2) {
+            System.out.print("Informe o ID do device: ");
+            Long deviceId = tec.nextLong();
+            // Implemente a lógica para editar o dispositivo pelo ID
+        } else {
+            System.out.println("Opção Inválida!");
+        }
+    }
 
+    public Device novoDevice() {
+        Device device = new Device();
 
+        System.out.println("Informe a marca: ");
+        device.setMarca(tec.next());
+        System.out.println("Informe o modelo: ");
+        device.setModelo(tec.next());
+        System.out.println("Informe o total de memória (em GB): ");
+        device.setMemoria(tec.nextLong());
+        System.out.println("Informe o total de armazenamento (em GB): ");
+        device.setArmazenamento(tec.nextLong());
 
+        return device;
+    }
+
+    public Long removerDevice() {
+        System.out.print("Informe o ID a ser removido: ");
+        return tec.nextLong();
+    }
+
+    public Long buscarDevice() {
+        System.out.print("Informe o ID do dispositivo desejado: ");
+        return tec.nextLong();
+    }
+
+    public void listarDevices(ArrayList<Device> devices) {
+        if (!devices.isEmpty()) {
+            for (Device device : devices) {
+                System.out.println("Id: " + device.getId());
+                System.out.println("Marca: " + device.getMarca());
+                System.out.println("Modelo: " + device.getModelo());
+                System.out.println("Total de memória: " + device.getMemoria() + " GB");
+                System.out.println("Total de armazenamento: " + device.getArmazenamento() + " GB");
+            }
+        } else {
+            System.out.println("Nenhum dispositivo cadastrado.");
+        }
+    }
+
+    public void gestaoDeAplicativos() {
+        System.out.println(" --- MENU DE Aplicativos ---");
+        System.out.println("1) Cadastrar um novo Aplicativo");
+        System.out.println("2) Listar Aplicativos cadastrados");
+        System.out.println("3) Pesquisar um Aplicativo");
+        System.out.println("4) Editar um Aplicativo");
+        System.out.println("5) Remover um Aplicativo");
+
+        System.out.print("Informe a opção desejada: ");
+    }

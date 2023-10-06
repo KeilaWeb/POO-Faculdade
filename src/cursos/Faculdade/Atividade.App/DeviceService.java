@@ -1,32 +1,79 @@
-package GestorPessoas;
+package Atividade.App;
 
 public class DeviceService {
-    private String nome;
-    private int idade;
+    Scanner tec = new Scanner(System.in);
+    public ArrayList<Device> devices = new ArrayList<>();
 
-    public Pessoa(String nome, int idade) {
-        this.nome = nome;
-        this.idade = idade;
+    public Device adicionarDevice(Device device) {
+        if (Objects.isNull(device)) {
+            System.out.println("Device não pode ser cadastrado.");
+            return device;
+        }
+        devices.add(device);
+        return device;
     }
 
-    public String getNome() {
-        return nome;
+    public ArrayList<Device> listarDevice() {
+        if (devices.isEmpty()) {
+            System.out.println("Não possui devices cadastrados.");
+        }
+        return devices;
     }
 
-    public int getIdade() {
-        return idade;
+    public Device buscarDevice(Long deviceId){
+        for (Device device : devices){
+            if (device.getId().equals(deviceId)) {
+                return device;
+            }
+        }
+        System.out.println("Device não encontrado.");
+        return null;
     }
 
-    public boolean isMaiorIdade() {
-        return idade >= 18;
+    public Device novoDevice(){
+        Device device = new Device();
+        System.out.println("Informe a marca: ");
+        device.setMarca(tec.next());
+        System.out.println("Informe o modelo: ");
+        device.setModelo(tec.next());
+        System.out.println("Informe a quantidade de memória: ");
+        device.setMemoria(tec.next());
+        System.out.println("Informe o total de armazenamento: ");
+        device.setArmazenamento(tec.nextLong());
+
+        System.out.println("Deseja informar os apps instalados? [s/n]");
+        String appsInstalados = tec.next();
+        if (appsInstalados.equalsIgnoreCase("s")) {
+            AplicativoService aplicativoService = new AplicativoService(); // Crie uma instância de AplicativoService
+            device.setAplicativos(aplicativoService.appsInstalados()); // Chame o método a partir da instância
+        }
+        return device;
     }
 
-    public boolean isIdadePar() {
-        return idade % 2 == 0;
+    public Device editarDevice(Long deviceId) {
+        for (Device editedDevice : devices) {
+            if (editedDevice.getId().equals(deviceId)) {
+                Device novoDevice = novoDevice();
+                devices.set(devices.indexOf(editedDevice), novoDevice);
+                System.out.println("Device editado com sucesso.");
+                return novoDevice;
+            }
+        }
+        System.out.println("Device não encontrado.");
+        return null;
     }
 
-    @Override
-    public String toString() {
-        return "Nome: " + nome + ", Idade: " + idade;
+    public Device editarDevice(Long deviceId, Device device){
+        Device editedDevice = buscarDevice(deviceId);
+        if (editedDevice != null) {
+            // Implemente a lógica de edição com base no dispositivo 'device'
+            return editedDevice;
+        }
+        System.out.println("Device não encontrado.");
+        return null;
+    }
+
+    public void excluirDevice(Long deviceId){
+        devices.removeIf(device -> device.getId().equals(deviceId));
     }
 }

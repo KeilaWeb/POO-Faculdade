@@ -2,44 +2,61 @@ package Atividade.App;
 
 import java.util.ArrayList;
 
-public class AplicativoService {
-    public ArrayList<Aplicativo> aplicativos = new ArrayList<>();
+public class Aplicativo {
+    private Long id;
+    private String appName;
+    private String appId;
+    private String versao;
+    private String ultimaAtualizacao;
 
-    public Aplicativo adicionarAplicativo(Aplicativo aplicativo){
-        //TODO: desenvolver lógica
-
-        return aplicativo;
+    public Aplicativo() {
     }
 
-    public ArrayList<Aplicativo> listarAplicativo(){
-        //TODO: desenvolver lógica
-
-        return this.aplicativos;
+    public Aplicativo(Long id, String appName, String appId, String versao, String ultimaAtualizacao) {
+        this.id = id;
+        this.appName = appName;
+        this.appId = appId;
+        this.versao = versao;
+        this.ultimaAtualizacao = ultimaAtualizacao;
     }
 
-    public Aplicativo buscarAplicativo(Long aplicativoId){
-        Aplicativo aplicativo = new Aplicativo();
-        //TODO: desenvolver lógica
-
-        return aplicativo;
+    public Long getId() {
+        return id;
     }
 
-    public Aplicativo editarAplicativo(Long aplicativoId){
-        Aplicativo aplicativo = new Aplicativo();
-        //TODO: desenvolver lógica
-
-        return aplicativo;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Aplicativo editarAplicativo(Long deviceId, Aplicativo aplicativo){
-        Aplicativo editedAplicativo = new Aplicativo();
-        //TODO: desenvolver lógica
-
-        return editedAplicativo;
+    public String getAppName() {
+        return appName;
     }
 
-    public void excluirAplicativo(Long aplicativoId){
-        //TODO: desenvolver lógica
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
 
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
+
+    public String getVersao() {
+        return versao;
+    }
+
+    public void setVersao(String versao) {
+        this.versao = versao;
+    }
+
+    public String getUltimaAtualizacao() {
+        return ultimaAtualizacao;
+    }
+
+    public void setUltimaAtualizacao(String ultimaAtualizacao) {
+        this.ultimaAtualizacao = ultimaAtualizacao;
     }
 }
